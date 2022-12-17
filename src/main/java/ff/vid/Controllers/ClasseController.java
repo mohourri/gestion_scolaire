@@ -18,7 +18,7 @@ public class ClasseController {
 	private ClasseRepository cr;
 	
 	
-	@GetMapping("/classes")
+	@GetMapping("/getClasses")
 	public List<Classe> getAllClasses(){
 		return cr.findAll();
 	}
