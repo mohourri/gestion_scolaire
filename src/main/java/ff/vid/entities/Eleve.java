@@ -27,7 +27,7 @@ public class Eleve {
 
 	
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	int ID;
+	Long ID;
 	
 	String nom;
 	
@@ -47,6 +47,13 @@ public class Eleve {
 	@JoinColumn(name = "id_class")
 	private Classe classe;
 
-	@OneToMany (mappedBy = "eleve")
-	List<Examen> examens;
+//	@OneToMany (mappedBy = "eleve")
+//	List<Examen> examens;
+
+	@Override
+	public String toString() {
+		return "Eleve [ID=" + ID + ", nom=" + nom + ", prenom=" + prenom + ", date_inscription=" + date_inscription
+				+ ", dat_naissance=" + dat_naissance + ", email=" + email + ", tel=" + tel + ", classe=" + classe + "]";
+	}
+	
 }
