@@ -23,10 +23,15 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
-public class Note {
+public class Examen {
 	
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	int id_note;
+	int ID;
+	
+	@Temporal(TemporalType.DATE)
+	Date date;
+	
+	float note;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_eleve")
@@ -36,9 +41,5 @@ public class Note {
 	@JoinColumn(name = "id_matiere")
     Matiere matiere;
 	
-	@Temporal(TemporalType.DATE)
-	Date date;
-	
-	float note;
 
 }

@@ -25,6 +25,9 @@ public class Cour {
 
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	int id_cour;
+	
+	@Temporal(TemporalType.DATE)
+	Date date_cours;
 		
 	@ManyToOne
 	@JoinColumn(name = "id_class")
@@ -33,7 +36,9 @@ public class Cour {
 	@ManyToOne
 	@JoinColumn(name = "id_prof")
 	private Prof prof;
+
+	@ManyToOne
+	@JoinColumn(name = "id_matiere")
+	private Matiere matiere;
 	
-	@Temporal(TemporalType.DATE)
-	Date date_cours;
 }

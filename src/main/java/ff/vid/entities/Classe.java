@@ -1,11 +1,12 @@
 package ff.vid.entities;
 
-import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,14 @@ public class Classe {
 
 	
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	int id_class;
-	
-	String filliere;
-	
+	Long ID;
+	String filiere;
 	int niveau;
+
+	@OneToMany (mappedBy = "classe")
+	List<Eleve> eleves;
+
+	@OneToMany (mappedBy = "classe")
+	List<Cour> Cours;
 	
 }
