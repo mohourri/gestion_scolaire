@@ -61,7 +61,9 @@ public class ProfController {
     	List<Cour> cours = p.getCours();
     	List<Classe> allClasses = new ArrayList<Classe>();
     	for (Cour cour : cours) {
-    		allClasses.add(cour.getClasse());
+			if(!allClasses.contains(cour.getClasse())) {
+	    		allClasses.add(cour.getClasse());
+			}
 			
 		}
         return new ModelAndView("mesClasses", "classes", allClasses);
