@@ -23,7 +23,7 @@ public class Matiere {
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	Long ID;
 	
-	String libelle;
+	public String libelle;
 	
 	int volume_horaire;
 	@OneToMany (mappedBy = "matiere")

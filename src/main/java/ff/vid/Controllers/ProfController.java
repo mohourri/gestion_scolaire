@@ -17,11 +17,14 @@ import ff.vid.Repositories.ClasseRepository;
 import ff.vid.Repositories.EleveRepository;
 import ff.vid.Repositories.ExamenRepository;
 import ff.vid.Repositories.MatiereRepository;
+import ff.vid.Repositories.ProfRepository;
 import ff.vid.entities.Classe;
+import ff.vid.entities.Cour;
 import ff.vid.entities.Eleve;
 import ff.vid.entities.Examen;
 import ff.vid.entities.Matiere;
 import ff.vid.entities.MatiereEleves;
+import ff.vid.entities.Prof;
 
 @Controller
 public class ProfController {
@@ -33,38 +36,53 @@ public class ProfController {
 	private MatiereRepository matiereRepository;
 	@Autowired
 	private ExamenRepository examenRepository;
+	@Autowired
+	private ProfRepository profRepository;
 	
 	
 
-
-    @GetMapping("/")
-    public ModelAndView homePage() {
-		List<Classe> allClasses = classeRepository.findAll();
-        return new ModelAndView("mesClasses", "classes", allClasses);
-    }
+//
+//    @GetMapping("/")
+//    public ModelAndView homePage() {
+//		List<Classe> allClasses = classeRepository.findAll();
+//        return new ModelAndView("mesClasses", "classes", allClasses);
+//    }
 
 	
     @GetMapping("/mes_classes")
     public ModelAndView mesClasses() {
-		List<Classe> allClasses = classeRepository.findAll();
+    	//@RequestParam("ID_prof") String id_prof -- request param
+//    	Long id_p =Long.parseLong(id_prof);
+//    	if(id_p==null)
+//    		id_p =Long.parseLong("1");
+
+    	Long id_p = Long.parseLong("3");
+    	Prof p = profRepository.findById(id_p).orElse(null);
+    	List<Cour> cours = p.getCours();
+    	List<Classe> allClasses = new ArrayList<Classe>();
+    	for (Cour cour : cours) {
+			if(!allClasses.contains(cour.getClasse())) {
+	    		allClasses.add(cour.getClasse());
+			}
+			
+		}
         return new ModelAndView("mesClasses", "classes", allClasses);
     }
 
     @GetMapping("/mes_classes/c/")
     public ModelAndView getClasse(@RequestParam("ID_classe") String id_classe) {
-    	System.out.println(id_classe);
     	Classe classe = new Classe();
     	List<Eleve> eleves = new ArrayList<Eleve>();
     	List<Matiere> mt = new ArrayList<>();
+		Classe c = classeRepository.findById(Long.parseLong(id_classe)).orElse(classe);
     	try {
-    		Classe c = classeRepository.findById(Long.parseLong(id_classe)).orElse(classe);
     	    eleves = eleveRepository.findByClasse(c);
 	    	mt = matiereRepository.findAll();
     	} catch (NumberFormatException e) {
     	    e.printStackTrace();
     	}
 
-    	MatiereEleves me = new MatiereEleves(eleves,mt);
+    	MatiereEleves me = new MatiereEleves(eleves,mt, c.getFiliere()+" "+c.getNiveau());
         return new ModelAndView("maClasse", "me", me);
     }
 
@@ -83,7 +101,7 @@ public class ProfController {
 		ex.setNote(Float.parseFloat(note));
 		ex.setNumero(Integer.parseInt(num));
 		examenRepository.save(ex);
-        return new RedirectView("/");
+        return new RedirectView("/mes_classes");
 	}
     
 }

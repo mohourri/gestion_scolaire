@@ -28,7 +28,7 @@ public class Examen {
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	int ID;
 
-	int numero;
+	public int numero;
 	
 	float note;
 	
@@ -38,7 +38,7 @@ public class Examen {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_matiere")
-    Matiere matiere;
+    public Matiere matiere;
 	
 
 }

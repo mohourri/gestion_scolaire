@@ -47,13 +47,8 @@ public class Eleve {
 	@JoinColumn(name = "id_class")
 	private Classe classe;
 
-//	@OneToMany (mappedBy = "eleve")
-//	List<Examen> examens;
+	@OneToMany (mappedBy = "eleve")
+	public List<Examen> examens;
 
-	@Override
-	public String toString() {
-		return "Eleve [ID=" + ID + ", nom=" + nom + ", prenom=" + prenom + ", date_inscription=" + date_inscription
-				+ ", dat_naissance=" + dat_naissance + ", email=" + email + ", tel=" + tel + ", classe=" + classe + "]";
-	}
 	
 }
