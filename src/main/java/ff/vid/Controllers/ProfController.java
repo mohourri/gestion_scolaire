@@ -52,19 +52,18 @@ public class ProfController {
 
     @GetMapping("/mes_classes/c/")
     public ModelAndView getClasse(@RequestParam("ID_classe") String id_classe) {
-    	System.out.println(id_classe);
     	Classe classe = new Classe();
     	List<Eleve> eleves = new ArrayList<Eleve>();
     	List<Matiere> mt = new ArrayList<>();
+		Classe c = classeRepository.findById(Long.parseLong(id_classe)).orElse(classe);
     	try {
-    		Classe c = classeRepository.findById(Long.parseLong(id_classe)).orElse(classe);
     	    eleves = eleveRepository.findByClasse(c);
 	    	mt = matiereRepository.findAll();
     	} catch (NumberFormatException e) {
     	    e.printStackTrace();
     	}
 
-    	MatiereEleves me = new MatiereEleves(eleves,mt);
+    	MatiereEleves me = new MatiereEleves(eleves,mt, c.getFiliere()+" "+c.getNiveau());
         return new ModelAndView("maClasse", "me", me);
     }
 

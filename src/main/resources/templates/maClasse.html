@@ -491,7 +491,7 @@ table.table .avatar {
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2 >Classe infos</h2>
+                                    <h2 th:text="${me.classe}"></h2>
                                 </div>
                             </div>
                         </div>
@@ -510,7 +510,7 @@ table.table .avatar {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="e : ${me.eleves}">
+                                <tr th:each="e : ${me.eleves}" th:if="${not #lists.isEmpty(me.eleves)}">
 
                                     <td th:text="${e.ID}"></td>
                                     <td th:text="${e.nom}"></td>
@@ -524,6 +524,8 @@ table.table .avatar {
 	                                        <a href="#editEmployeeModal"    th:attr="data-param1=${e.ID}, data-param2=${e.nom},data-param3=${e.prenom},data-param4=${e.dat_naissance},data-param5=${e.date_inscription},data-param6=${e.email},data-param7=${e.tel},data-param8=${e.classe.ID}" onclick="javascript:remplirForm(this)"       data-toggle="modal">Noter <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     </td>
                                 </tr>
+						        <tr th:unless="${not #lists.isEmpty(me.eleves)}">
+								<td colspan="8" th:text="${'Ooops! Cette classe est vide. '}" style="color: red;"></td>						        </tr>
                                 
                             </tbody>
                         </table>
