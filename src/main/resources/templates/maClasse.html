@@ -481,7 +481,7 @@ table.table .avatar {
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
-                    <span>Admin</span>
+                    <h3>Espace enseignant</h3>
                     
                 </div>
             </nav>
@@ -492,9 +492,6 @@ table.table .avatar {
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h2 >Classe infos</h2>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span> Nouveau Examen</span></a>
                                 </div>
                             </div>
                         </div>
@@ -513,7 +510,7 @@ table.table .avatar {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="e : ${eleves}">
+                                <tr th:each="e : ${me.eleves}">
 
                                     <td th:text="${e.ID}"></td>
                                     <td th:text="${e.nom}"></td>
@@ -524,7 +521,7 @@ table.table .avatar {
                                     <td th:text="${e.tel}"></td>
                                     
                                     <td>
-	                                        <a href="#editEmployeeModal"    th:attr="data-param1=${e.ID}, data-param2=${e.nom},data-param3=${e.prenom},data-param4=${e.dat_naissance},data-param5=${e.date_inscription},data-param6=${e.email},data-param7=${e.tel}" onclick="javascript:remplirForm(this)"      class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">Noter</i></a>
+	                                        <a href="#editEmployeeModal"    th:attr="data-param1=${e.ID}, data-param2=${e.nom},data-param3=${e.prenom},data-param4=${e.dat_naissance},data-param5=${e.date_inscription},data-param6=${e.email},data-param7=${e.tel},data-param8=${e.classe.ID}" onclick="javascript:remplirForm(this)"       data-toggle="modal">Noter <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     </td>
                                 </tr>
                                 
@@ -534,47 +531,53 @@ table.table .avatar {
                     </div>
                 </div>        
             </div>
-
+            <!-- Edit Modal HTML -->
            <div id="editEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="/enseignants/modifier" method="post">
+                        <form action="/examen/noter" method="post">
                             <div class="modal-header">						
-                                <h4 class="modal-title">Modifier Enseignant</h4>
+                                <h4 class="modal-title" id="formHeader"></h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">	
                                 <div class="form-group">
-                                    <input id="input_id" name="id" type="text" class="form-control" hidden="true">
-                                </div>				
+                                    <input id="input_id"  name="eleve" type="text" class="form-control" hidden="true">
+                                </div>	
                                 <div class="form-group">
-                                    <label>Nom</label>
-                                    <input id="input_nom" name="nom" type="text" class="form-control" required>
+                                    <input id="input_classe"  name="classe" type="text" class="form-control" hidden="true">
+                                </div>	
+                                <div class="form-group">
+                                    <label>Matière</label>
+	                                <select class="form-control" id="colors" name="matiere">
+								        <option th:each="mat : ${me.matieres}"
+								                th:value="${mat.ID}"
+								                th:text="${mat.libelle}">
+						                </option>
+								    </select>
+                                </div>	
+                                 <div class="form-group">
+                                    <label>Numero d'examen</label>
+	                                <select class="form-control" name="numero_exam">
+	                                	<option value="1">1 -er</option>
+	                                	<option value="2">2 -éme</option>
+	                                	<option value="3">1 -éme</option>
+	                                </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Prénom</label>
-                                    <input id="input_prenom" name="prenom" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date Naissance</label>
-                                    <input id="input_dat_naissance" name="date_naissance" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date d'inscription</label>
-                                    <input id="input_date_inscription" name="date_inscription" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input id="input_email" name="email" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Telephone</label>
-                                    <input id="input_tel" name="tel" type="text" class="form-control" required>
-                                </div>			
+                                    <label>Note</label>
+	                                <select class="form-control" name="note">
+									    <th:block th:each="i : ${#numbers.sequence(0,20)}">
+									        <option th:value="${i}" th:text="${i}"></option>
+									    </th:block>
+									</select>
+
+									
+                                </div>		
                             </div>
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
-                                <input type="submit" class="btn btn-info" value="Modifier">
+                                <input type="submit" class="btn btn-info" value="Noter">
                             </div>
                         </form>
                     </div>
@@ -587,6 +590,8 @@ table.table .avatar {
     	
     function  remplirForm(element){
 	    event.preventDefault();
+	    var nom = 
+		document.getElementById("formHeader").innerHTML = "Noter "+element.getAttribute('data-param2')+" "+element.getAttribute('data-param3');
 		document.getElementById("input_id").value = element.getAttribute('data-param1');
 		document.getElementById("input_nom").value = element.getAttribute('data-param2');
 		document.getElementById("input_prenom").value = element.getAttribute('data-param3');
@@ -594,6 +599,7 @@ table.table .avatar {
 		document.getElementById("input_date_inscription").value = element.getAttribute('data-param5');
 		document.getElementById("input_email").value = element.getAttribute('data-param6');
 		document.getElementById("input_tel").value = element.getAttribute('data-param7');
+		document.getElementById("input_classe").value = element.getAttribute('data-param8');
 
 	}
     

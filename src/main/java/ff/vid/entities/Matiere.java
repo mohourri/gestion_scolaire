@@ -21,7 +21,7 @@ import lombok.ToString;
 public class Matiere {
 
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-	int id_matiere;
+	Long ID;
 	
 	String libelle;
 	

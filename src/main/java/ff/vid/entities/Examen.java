@@ -27,9 +27,8 @@ public class Examen {
 	
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	int ID;
-	
-	@Temporal(TemporalType.DATE)
-	Date date;
+
+	int numero;
 	
 	float note;
 	
