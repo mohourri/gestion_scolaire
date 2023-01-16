@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,9 @@ public class Prof {
 	 @ManyToOne
    	 @JoinColumn(name = "id_matiere")
 	 private Matiere matiere;
+	 
+	 @Transient
+	 String nomMatiere;
 	 
 	 @OneToMany(mappedBy = "prof")
 	 List<Cour> cours;

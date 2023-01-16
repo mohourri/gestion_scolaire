@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,12 +34,21 @@ public class Cour {
 	@JoinColumn(name = "id_class")
 	private Classe classe;
 	
+	@Transient
+	String classeNom;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_prof")
 	private Prof prof;
+	
+	@Transient
+	String ProfNom;
 
 	@ManyToOne
 	@JoinColumn(name = "id_matiere")
 	private Matiere matiere;
+	
+	@Transient
+	String MatiereNom;
 	
 }
