@@ -7,4 +7,5 @@ import ff.vid.entities.Prof;
 
 public interface ProfRepository extends JpaRepository<Prof,Long> {
 
+	public Prof findByEmailAndPassword(String email, String password);
 }

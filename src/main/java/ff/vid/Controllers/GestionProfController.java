@@ -27,10 +27,10 @@ public class GestionProfController {
 	
 	
 	@Autowired
-	private ProfRepository profRepository;
+	public ProfRepository profRepository;
 	
 	@Autowired
-	private MatiereRepository matiereRepository;
+	public MatiereRepository matiereRepository;
 	
 	
 	@GetMapping("/Admin/Enseignants")

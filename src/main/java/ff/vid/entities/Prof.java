@@ -35,6 +35,8 @@ public class Prof {
 	 
 	 String email;
 	 
+	 String password;
+	 
 	 @ManyToOne
    	 @JoinColumn(name = "id_matiere")
 	 private Matiere matiere;
