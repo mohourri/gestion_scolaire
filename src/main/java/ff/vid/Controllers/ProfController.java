@@ -50,13 +50,10 @@ public class ProfController {
 
 	
     @GetMapping("/mes_classes")
-    public ModelAndView mesClasses() {
-    	//@RequestParam("ID_prof") String id_prof -- request param
-//    	Long id_p =Long.parseLong(id_prof);
-//    	if(id_p==null)
-//    		id_p =Long.parseLong("1");
+    public ModelAndView mesClasses(@RequestParam("ID_prof") String id_prof) {
+    	// -- request param
+    	Long id_p =Long.parseLong(id_prof);
 
-    	Long id_p = Long.parseLong("3");
     	Prof p = profRepository.findById(id_p).orElse(null);
     	List<Cour> cours = p.getCours();
     	List<Classe> allClasses = new ArrayList<Classe>();
