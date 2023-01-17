@@ -55,8 +55,8 @@ public class LoginController {
 			Prof p = profRepository.findByEmailAndPassword(username, password);
 			if(p!=null)
 			{
-				model.addAttribute("nom",p.getNom());
-				return "test";			
+				model.addAttribute("id",p.getId_prof());
+				return "mesClasses";			
 			}
 			
 			
